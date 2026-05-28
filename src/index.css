@@ -1,0 +1,255 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap');
+
+@import "tailwindcss";
+
+:root {
+  --brand-bg: #070913;
+  --brand-primary: #7C5CFF;
+  --brand-secondary: #00D4FF;
+  --brand-card: rgba(255, 255, 255, 0.025);
+  --brand-border: rgba(255, 255, 255, 0.05);
+  --brand-text: #F8FAFC;
+  --brand-muted: #94A3B8;
+  --brand-accent: #00FF87;
+  --brand-glow: rgba(124, 92, 255, 0.15);
+}
+
+/* 2. Sleek Dark Charcoal Graphite Theme */
+.theme-graphite {
+  --brand-bg: #121214;
+  --brand-primary: #8E9196; /* Titanium slate */
+  --brand-secondary: #E4E4E7; /* Light silver */
+  --brand-card: rgba(255, 255, 255, 0.015);
+  --brand-border: rgba(255, 255, 255, 0.04);
+  --brand-text: #FAFAFA;
+  --brand-muted: #71717A;
+  --brand-accent: #E4E4E7;
+  --brand-glow: rgba(228, 228, 231, 0.06);
+}
+
+/* 3. High-Quality Professional Light Theme */
+.theme-light {
+  --brand-bg: #F1F5F9; /* High-contrast clean Slate-100 backdrop */
+  --brand-primary: #4F46E5; /* Indigo-600 */
+  --brand-secondary: #0891B2; /* Cyan-600 */
+  --brand-card: rgba(255, 255, 255, 0.9); /* Opaque premium white card overlay */
+  --brand-border: rgba(15, 23, 42, 0.12); /* Solid, crisp Slate-200 boundary */
+  --brand-text: #0F172A; /* High-contrast Slate-900 */
+  --brand-muted: #334155; /* Highly visible Slate-700 for muted elements */
+  --brand-accent: #059669; /* Emerald-600 */
+  --brand-glow: rgba(79, 70, 229, 0.08);
+}
+
+@theme {
+  --color-brand-bg: var(--brand-bg);
+  --color-brand-primary: var(--brand-primary);
+  --color-brand-secondary: var(--brand-secondary);
+  --color-brand-card: var(--brand-card);
+  --color-brand-border: var(--brand-border);
+  --color-brand-text: var(--brand-text);
+  --color-brand-muted: var(--brand-muted);
+  --color-brand-accent: var(--color-brand-accent);
+
+  --font-sans: 'Inter', sans-serif;
+  --font-display: 'Outfit', sans-serif;
+
+  --animate-blob-spin-1: blobSpin1 25s infinite ease-in-out;
+  --animate-blob-spin-2: blobSpin2 30s infinite ease-in-out;
+  --animate-typing: typing 1.4s infinite ease-in-out;
+  --animate-pulse-subtle: pulseSubtle 4s infinite ease-in-out;
+  --animate-glow-pulse: glowPulse 2s infinite ease-in-out;
+
+  @keyframes blobSpin1 {
+    0%, 100% { transform: translate(0px, 0px) scale(1); opacity: 0.35; }
+    33% { transform: translate(30px, -45px) scale(1.15); opacity: 0.5; }
+    66% { transform: translate(-20px, 20px) scale(0.9); opacity: 0.35; }
+  }
+  @keyframes blobSpin2 {
+    0%, 100% { transform: translate(0px, 0px) scale(1); opacity: 0.3; }
+    50% { transform: translate(-40px, 30px) scale(1.1); opacity: 0.45; }
+  }
+  @keyframes typing {
+    0%, 100% { opacity: 0.3; }
+    50% { opacity: 1; }
+  }
+  @keyframes pulseSubtle {
+    0%, 100% { opacity: 0.5; transform: scale(1); }
+    50% { opacity: 0.8; transform: scale(1.015); }
+  }
+  @keyframes glowPulse {
+    0%, 100% { box-shadow: 0 0 15px var(--brand-glow); }
+    50% { box-shadow: 0 0 25px var(--brand-glow); }
+  }
+}
+
+@layer base {
+  body {
+    @apply bg-brand-bg text-brand-text font-sans antialiased overflow-x-hidden selection:bg-brand-primary/30 selection:text-brand-text;
+    background-color: var(--brand-bg);
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-display tracking-tight;
+  }
+}
+
+@layer utilities {
+  .glass-card {
+    background: var(--brand-card);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid var(--brand-border);
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.15);
+  }
+
+  .glass-card-hover {
+    @apply transition-all duration-300;
+  }
+
+  .glass-card-hover:hover {
+    background: rgba(255, 255, 255, 0.04);
+    border-color: rgba(255, 255, 255, 0.1);
+    box-shadow: 0 8px 32px 0 var(--brand-glow);
+    transform: translateY(-2px);
+  }
+
+  .theme-light .glass-card-hover:hover {
+    background: rgba(255, 255, 255, 0.95);
+    border-color: rgba(15, 23, 42, 0.2);
+    box-shadow: 0 12px 36px 0 rgba(15, 23, 42, 0.1);
+  }
+
+  .text-gradient-primary {
+    @apply bg-clip-text text-transparent bg-gradient-to-r from-brand-text via-brand-primary to-brand-secondary;
+  }
+
+  .text-gradient-secondary {
+    @apply bg-clip-text text-transparent bg-gradient-to-r from-brand-primary to-brand-secondary;
+  }
+
+  .border-gradient {
+    border-image: linear-gradient(to right, var(--brand-primary), var(--brand-secondary)) 1;
+  }
+
+  /* Custom high-fidelity scrollbar */
+  ::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: var(--brand-bg);
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 9999px;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: var(--brand-primary);
+  }
+
+  /* Hide default scrollbar for clean UI blocks */
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  .no-scrollbar {
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+  }
+
+  /* ====================================================
+     LIGHT THEME EXPLICIT UI UPGRADES (Notion/Vercel spec)
+     ==================================================== */
+
+  /* Opaque elevated glass card overrides for high legibility */
+  .theme-light .glass-card {
+    background: rgba(255, 255, 255, 0.96) !important;
+    border: 1px solid rgba(15, 23, 42, 0.12) !important;
+    box-shadow: 0 12px 32px -8px rgba(15, 23, 42, 0.08), 0 1px 3px rgba(15, 23, 42, 0.04) !important;
+  }
+
+  /* Opaque theme dropdown & settings drawers popups overrides */
+  .theme-light .bg-brand-bg\/95 {
+    background-color: rgba(255, 255, 255, 0.98) !important;
+    border-color: rgba(15, 23, 42, 0.15) !important;
+    box-shadow: 0 20px 40px -15px rgba(15, 23, 42, 0.18), 0 1px 5px rgba(15, 23, 42, 0.05) !important;
+  }
+
+  /* Light gray button surfaces for triggers */
+  .theme-light .bg-white\/\[0\.02\] {
+    background-color: rgba(15, 23, 42, 0.04) !important;
+    border-color: rgba(15, 23, 42, 0.12) !important;
+  }
+
+  .theme-light .bg-white\/\[0\.02\]:hover {
+    background-color: rgba(15, 23, 42, 0.07) !important;
+    border-color: rgba(15, 23, 42, 0.18) !important;
+  }
+
+  /* Light container cards */
+  .theme-light .bg-white\/\[0\.015\] {
+    background-color: rgba(15, 23, 42, 0.02) !important;
+    border-color: rgba(15, 23, 42, 0.08) !important;
+  }
+
+  /* Dropdown hover list states */
+  .theme-light .hover\:bg-white\/\[0\.03\]:hover {
+    background-color: rgba(15, 23, 42, 0.05) !important;
+    color: #4F46E5 !important; /* Accent text on active hovers */
+  }
+
+  .theme-light .hover\:bg-white\/\[0\.04\]:hover {
+    background-color: rgba(15, 23, 42, 0.06) !important;
+  }
+
+  .theme-light select option {
+    background-color: #FFFFFF !important;
+    color: #0F172A !important;
+  }
+
+  /* Comprehensive high-fidelity Light Theme inputs, selects & textareas styling */
+  .theme-light input,
+  .theme-light textarea {
+    background-color: #FFFFFF !important;
+    color: #0F172A !important;
+    border-color: rgba(15, 23, 42, 0.16) !important;
+  }
+
+  .theme-light input:focus,
+  .theme-light textarea:focus {
+    background-color: #FFFFFF !important;
+    color: #0F172A !important;
+    border-color: #4F46E5 !important;
+    box-shadow: 0 0 0 1px #4F46E5 !important;
+  }
+
+  .theme-light input::placeholder,
+  .theme-light textarea::placeholder {
+    color: #64748B !important;
+    opacity: 1 !important;
+  }
+
+  .theme-light select {
+    background-color: #FFFFFF !important;
+    color: #0F172A !important;
+    border-color: rgba(15, 23, 42, 0.16) !important;
+  }
+
+  .theme-light select:focus {
+    border-color: #4F46E5 !important;
+    box-shadow: 0 0 0 1px #4F46E5 !important;
+  }
+
+  /* Accessibility icon color overrides in Light mode */
+  .theme-light .text-brand-muted {
+    color: #475569 !important; /* Darker slate so icons remain clearly visible */
+  }
+
+  .theme-light .placeholder-brand-muted\/30::placeholder {
+    color: #94A3B8 !important; /* Visible placeholders */
+  }
+}
+
