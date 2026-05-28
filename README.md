@@ -2,7 +2,7 @@
 # PrepWise 🚀
 ### *The Premium AI-Powered Mock Interview Simulator & Feedback Ecosystem*
   
-![PrepWise SaaS Platform Preview](https://raw.githubusercontent.com/jiyathakur-30/prepwise/main/public/og-image.png)
+
 PrepWise is a production-ready, highly polished, immersive AI interview coaching platform designed to elevate software engineering and HR candidates into elite-level communicators. Crafted with deep glassmorphic visuals, dynamic state orchestration, custom native audio synthesis, and a pure-frontend modular heuristic engine, PrepWise replicates the exact pressure, pacing, and analytical rigor of top-tier technology companies.
 
 ---
