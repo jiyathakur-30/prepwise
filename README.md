@@ -1,3 +1,4 @@
+
 # PrepWise 🚀
 ### *The Premium AI-Powered Mock Interview Simulator & Feedback Ecosystem*
 
@@ -112,7 +113,7 @@ Ensure you have [Node.js](https://nodejs.org/) (v18+) installed.
 Clone the repository and install the dependencies:
 ```bash
 # Clone the repository
-git clone https://github.com/your-username/prepwise.git
+git clonegit clone https://github.com/jiyathakur-30/prepwise.git
 cd prepwise
 
 # Install packages
@@ -141,3 +142,5 @@ Distributed under the MIT License. See `LICENSE` for more information.
 ---
 
 ### *Made with 💜 for developers, by the PrepWise Team.*
+
+
