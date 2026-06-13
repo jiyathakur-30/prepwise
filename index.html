@@ -5,6 +5,30 @@
     <link rel="icon" type="image/svg+xml" href="/prepwise/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     
+    <!-- GitHub Pages SPA Redirect Script -->
+    <script type="text/javascript">
+      (window.history && window.history.replaceState) && (function() {
+        var search = window.location.search;
+        if (search && search.indexOf('p=') !== -1) {
+          var params = {};
+          search.slice(1).split('&').forEach(function(pair) {
+            var parts = pair.split('=');
+            params[parts[0]] = parts[1];
+          });
+          if (params.p) {
+            var path = '/' + decodeURIComponent(params.p).replace(/~and~/g, '&');
+            if (params.q) {
+              path += '?' + decodeURIComponent(params.q).replace(/~and~/g, '&');
+            }
+            sessionStorage.setItem('prepwise_redirect_path', path);
+            
+            var newUrl = window.location.protocol + '//' + window.location.host + window.location.pathname + window.location.hash;
+            window.history.replaceState(null, null, newUrl);
+          }
+        }
+      })();
+    </script>
+    
     <!-- Primary SEO Metadata -->
     <title>PrepWise - Premium AI-Powered Interview Coach & Feedback Ecosystem</title>
     <meta name="title" content="PrepWise - Premium AI-Powered Interview Coach & Feedback Ecosystem" />
@@ -25,8 +49,8 @@
     <meta property="twitter:title" content="PrepWise - Premium AI-Powered Interview Coach" />
     <meta property="twitter:description" content="Immersive split-screen interview simulations with adaptive coaching, custom diagnostic voice metrics, and granular heuristic analytics dashboards." />
     <meta property="twitter:image" content="/og-image.png" />
-    <script type="module" crossorigin src="/prepwise/assets/index-D9NUtnfu.js"></script>
-    <link rel="stylesheet" crossorigin href="/prepwise/assets/index-CnPZFAy7.css">
+    <script type="module" crossorigin src="/prepwise/assets/index-Nwcd6gg3.js"></script>
+    <link rel="stylesheet" crossorigin href="/prepwise/assets/index-ErdGrPiN.css">
   </head>
   <body>
     <div id="root"></div>
