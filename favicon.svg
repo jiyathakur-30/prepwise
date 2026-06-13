@@ -1,29 +1,41 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="100%" height="100%">
   <defs>
-    <!-- Glowing gradients -->
-    <linearGradient id="cyber-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+    <!-- Premium SaaS 3-stop gradient matching the brand color palette -->
+    <linearGradient id="prepwise-brand-gradient" x1="0%" y1="100%" x2="100%" y2="0%">
       <stop offset="0%" stop-color="#7C5CFF" />
+      <stop offset="50%" stop-color="#2563EB" />
       <stop offset="100%" stop-color="#00D4FF" />
     </linearGradient>
-    <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
-      <feGaussianBlur stdDeviation="16" result="blur" />
+    <filter id="glow-effect" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="12" result="blur" />
       <feMerge>
         <feMergeNode in="blur" />
         <feMergeNode in="SourceGraphic" />
       </feMerge>
     </filter>
   </defs>
-  <!-- Background circular subtle container -->
+
+  <!-- Background container with dark premium YC-startup style canvas -->
   <rect width="512" height="512" rx="128" fill="#070913" />
-  <!-- Overlapping glowing AI diamond sparks -->
-  <g transform="translate(136, 136)" filter="url(#glow)">
-    <!-- Outer accent path -->
-    <path d="M 120 0 L 240 120 L 120 240 L 0 120 Z" fill="none" stroke="url(#cyber-grad)" stroke-width="16" stroke-linejoin="round" />
-    <!-- Inner core spark -->
-    <path d="M 120 40 L 200 120 L 120 200 L 40 120 Z" fill="url(#cyber-grad)" opacity="0.85" />
-    <!-- Soundwave/Signal frequency nodes in center -->
-    <circle cx="120" cy="120" r="16" fill="#070913" />
-    <path d="M 100 120 L 140 120" stroke="#070913" stroke-width="4" stroke-linecap="round" />
-    <path d="M 120 100 L 120 140" stroke="#070913" stroke-width="4" stroke-linecap="round" />
+
+  <!-- Outer compass loop forming the letter "P" -->
+  <g filter="url(#glow-effect)">
+    <path 
+      d="M 154,410 L 154,215 A 102,102 0 0,1 358,215 A 102,102 0 0,1 154,215" 
+      stroke="url(#prepwise-brand-gradient)" 
+      stroke-width="46" 
+      stroke-linecap="round" 
+      stroke-linejoin="round"
+      fill="none"
+    />
+
+    <!-- Pivot hub in the center of the compass dial -->
+    <circle cx="256" cy="215" r="18" fill="#FFFFFF" />
+
+    <!-- North-East pointing needle tip (vibrant cyan secondary) -->
+    <path d="M 241,200 L 307,164 L 271,230 Z" fill="#00D4FF" />
+
+    <!-- South-West pointing needle tip (subtle slate balance) -->
+    <path d="M 241,200 L 205,266 L 271,230 Z" fill="#64748B" />
   </g>
 </svg>
