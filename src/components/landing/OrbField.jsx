@@ -54,11 +54,12 @@ export default function OrbField({ className = '' }) {
       const baseRgb = hexToRgb(primary);
       colorsRef.current = {
         base: baseRgb,
-        highlight: lighten(baseRgb, 90),
+        highlight: lighten(baseRgb, 115),
+        lightMid: lighten(baseRgb, 45),
         mid: baseRgb,
-        dark: darken(baseRgb, 70),
-        veryDark: darken(baseRgb, 130),
-        edge: { r: 4, g: 5, b: 10 },
+        dark: darken(baseRgb, 55),
+        veryDark: darken(baseRgb, 115),
+        edge: { r: 3, g: 2, b: 10 },
       };
     }
 
@@ -79,17 +80,19 @@ export default function OrbField({ className = '' }) {
       const isMobile = width < 768;
       if (isMobile) {
         orbs = [
-          { x: 0.7, y: 0.3, r: 110, phase: 0, floatAmp: 18, floatSpeed: 0.00035, parallax: 0.15, opacity: 1 },
-          { x: 0.25, y: 0.65, r: 75, phase: 2.5, floatAmp: 12, floatSpeed: 0.00045, parallax: 0.08, opacity: 0.75 },
+          { x: 0.78, y: 0.28, r: 165, depth: 3, phase: 0, floatAmp: 22, floatSpeed: 0.00028, parallax: 0.22, opacity: 0.95 },
+          { x: 0.15, y: 0.68, r: 105, depth: 2, phase: 2.4, floatAmp: 16, floatSpeed: 0.00038, parallax: 0.12, opacity: 0.55 },
+          { x: 0.88, y: 0.88, r: 55, depth: 1, phase: 4.1, floatAmp: 10, floatSpeed: 0.0005, parallax: 0.06, opacity: 0.3 },
         ];
       } else {
         orbs = [
-          { x: 0.68, y: 0.4, r: 200, phase: 0, floatAmp: 28, floatSpeed: 0.0003, parallax: 0.25, opacity: 1 },
-          { x: 0.28, y: 0.58, r: 135, phase: 2.1, floatAmp: 22, floatSpeed: 0.00038, parallax: 0.15, opacity: 0.85 },
-          { x: 0.82, y: 0.72, r: 85, phase: 4.3, floatAmp: 14, floatSpeed: 0.0005, parallax: 0.18, opacity: 0.65 },
-          { x: 0.12, y: 0.22, r: 60, phase: 1.2, floatAmp: 10, floatSpeed: 0.0006, parallax: 0.1, opacity: 0.5 },
+          { x: 0.82, y: 0.3, r: 310, depth: 4, phase: 0, floatAmp: 34, floatSpeed: 0.00026, parallax: 0.32, opacity: 1 },
+          { x: 0.16, y: 0.62, r: 210, depth: 3, phase: 2.2, floatAmp: 26, floatSpeed: 0.00034, parallax: 0.19, opacity: 0.78 },
+          { x: 0.92, y: 0.82, r: 125, depth: 2, phase: 4.5, floatAmp: 16, floatSpeed: 0.00044, parallax: 0.13, opacity: 0.42 },
+          { x: 0.06, y: 0.1, r: 70, depth: 1, phase: 1.3, floatAmp: 11, floatSpeed: 0.00055, parallax: 0.07, opacity: 0.28 },
         ];
       }
+      orbs.sort((a, b) => a.depth - b.depth);
     }
 
     function resize() {
@@ -107,68 +110,88 @@ export default function OrbField({ className = '' }) {
       const c = colorsRef.current;
       if (!c) return;
 
-      const breathe = 1 + Math.sin(time * 0.0008 + orb.phase) * 0.045;
+      const breathe = 1 + Math.sin(time * 0.0006 + orb.phase) * 0.038;
       const r = Math.max(10, baseR * breathe);
-      const stretchX = 1 + Math.sin(time * 0.0006 + orb.phase) * 0.06;
-      const stretchY = 1 - Math.sin(time * 0.0006 + orb.phase) * 0.06;
+      const stretchX = 1 + Math.sin(time * 0.0005 + orb.phase) * 0.07;
+      const stretchY = 1 - Math.sin(time * 0.0005 + orb.phase) * 0.07;
       const op = orb.opacity;
+
+      const lx = -0.34;
+      const ly = -0.38;
 
       ctx.save();
       ctx.translate(cx, cy);
       ctx.scale(stretchX, stretchY);
 
-      // Outer atmospheric glow
-      const glowR = r * 2.8;
-      const glow = ctx.createRadialGradient(0, 0, r * 0.7, 0, 0, glowR);
-      glow.addColorStop(0, rgba(c.base, 0.18 * op));
-      glow.addColorStop(0.4, rgba(c.base, 0.06 * op));
+      // 1 — Atmospheric glow (additive)
+      ctx.globalCompositeOperation = 'lighter';
+      const glowR = r * 3.4;
+      const glow = ctx.createRadialGradient(0, 0, r * 0.75, 0, 0, glowR);
+      glow.addColorStop(0, rgba(c.base, 0.14 * op));
+      glow.addColorStop(0.35, rgba(c.base, 0.05 * op));
       glow.addColorStop(1, rgba(c.base, 0));
       ctx.fillStyle = glow;
       ctx.beginPath();
       ctx.arc(0, 0, glowR, 0, Math.PI * 2);
       ctx.fill();
 
-      // Main sphere body — directional light from upper-left
-      const lightX = -r * 0.32;
-      const lightY = -r * 0.36;
-      const body = ctx.createRadialGradient(lightX, lightY, r * 0.05, 0, 0, r * 1.25);
-      body.addColorStop(0, rgba(c.highlight, 0.95 * op));
-      body.addColorStop(0.12, rgba(c.mid, 0.88 * op));
-      body.addColorStop(0.45, rgba(c.dark, 0.92 * op));
-      body.addColorStop(0.8, rgba(c.veryDark, 0.95 * op));
-      body.addColorStop(1, rgba(c.edge, op));
-      ctx.fillStyle = body;
+      // 2 — Sphere body (directional light from upper-left)
+      ctx.globalCompositeOperation = 'source-over';
+      const bodyGrad = ctx.createRadialGradient(r * lx, r * ly, r * 0.02, 0, 0, r * 1.28);
+      bodyGrad.addColorStop(0, rgba(c.highlight, 0.92 * op));
+      bodyGrad.addColorStop(0.08, rgba(c.lightMid, 0.9 * op));
+      bodyGrad.addColorStop(0.3, rgba(c.mid, 0.86 * op));
+      bodyGrad.addColorStop(0.6, rgba(c.dark, 0.92 * op));
+      bodyGrad.addColorStop(0.88, rgba(c.veryDark, 0.96 * op));
+      bodyGrad.addColorStop(1, rgba(c.edge, op));
+      ctx.fillStyle = bodyGrad;
       ctx.beginPath();
       ctx.arc(0, 0, r, 0, Math.PI * 2);
       ctx.fill();
 
-      // Specular highlight — small bright spot
-      const specX = -r * 0.38;
-      const specY = -r * 0.4;
-      const spec = ctx.createRadialGradient(specX, specY, 0, specX, specY, r * 0.38);
-      spec.addColorStop(0, `rgba(255, 245, 255, ${0.55 * op})`);
-      spec.addColorStop(0.35, `rgba(240, 230, 255, ${0.18 * op})`);
+      // 3 — Subsurface scatter (inner glow, additive)
+      ctx.globalCompositeOperation = 'lighter';
+      const sss = ctx.createRadialGradient(0, 0, 0, 0, 0, r * 0.55);
+      sss.addColorStop(0, rgba(c.base, 0.16 * op));
+      sss.addColorStop(1, rgba(c.base, 0));
+      ctx.fillStyle = sss;
+      ctx.beginPath();
+      ctx.arc(0, 0, r, 0, Math.PI * 2);
+      ctx.fill();
+
+      // 4 — Specular highlight (bright, small, soft)
+      const specX = r * (lx + 0.04);
+      const specY = r * (ly + 0.03);
+      const specR = r * 0.3;
+      const spec = ctx.createRadialGradient(specX, specY, 0, specX, specY, specR);
+      spec.addColorStop(0, `rgba(255, 248, 255, ${0.7 * op})`);
+      spec.addColorStop(0.25, `rgba(240, 230, 255, ${0.28 * op})`);
       spec.addColorStop(1, 'rgba(255, 255, 255, 0)');
       ctx.fillStyle = spec;
       ctx.beginPath();
       ctx.arc(0, 0, r, 0, Math.PI * 2);
       ctx.fill();
 
-      // Rim light on lower-right edge (translucency feel)
-      const rim = ctx.createRadialGradient(r * 0.45, r * 0.5, r * 0.65, r * 0.2, r * 0.25, r * 1.05);
+      // 5 — Rim light on shadow side (translucency)
+      const rimX = -r * lx * 0.45;
+      const rimY = -r * ly * 0.45;
+      const rim = ctx.createRadialGradient(rimX, rimY, r * 0.82, rimX, rimY, r * 1.03);
       rim.addColorStop(0, 'rgba(0, 0, 0, 0)');
-      rim.addColorStop(0.82, 'rgba(0, 0, 0, 0)');
-      rim.addColorStop(1, rgba(c.base, 0.12 * op));
+      rim.addColorStop(0.88, rgba(c.base, 0.06 * op));
+      rim.addColorStop(1, rgba(c.base, 0.14 * op));
       ctx.fillStyle = rim;
       ctx.beginPath();
       ctx.arc(0, 0, r, 0, Math.PI * 2);
       ctx.fill();
 
-      // Deep shadow on lower-right interior
-      const shadow = ctx.createRadialGradient(r * 0.3, r * 0.35, 0, r * 0.1, r * 0.15, r * 0.9);
+      // 6 — Core shadow deepening
+      ctx.globalCompositeOperation = 'source-over';
+      const shadowX = -r * lx * 0.35;
+      const shadowY = -r * ly * 0.35;
+      const shadow = ctx.createRadialGradient(shadowX, shadowY, 0, shadowX, shadowY, r * 0.72);
       shadow.addColorStop(0, 'rgba(0, 0, 0, 0)');
-      shadow.addColorStop(0.6, 'rgba(0, 0, 0, 0)');
-      shadow.addColorStop(1, `rgba(0, 0, 0, ${0.35 * op})`);
+      shadow.addColorStop(0.55, 'rgba(0, 0, 0, 0)');
+      shadow.addColorStop(1, `rgba(4, 2, 14, ${0.42 * op})`);
       ctx.fillStyle = shadow;
       ctx.beginPath();
       ctx.arc(0, 0, r, 0, Math.PI * 2);
@@ -181,16 +204,16 @@ export default function OrbField({ className = '' }) {
       if (!startRef.current) startRef.current = time;
       const t = time - startRef.current;
 
-      pointer.current.x += (targetPointer.current.x - pointer.current.x) * 0.04;
-      pointer.current.y += (targetPointer.current.y - pointer.current.y) * 0.04;
+      pointer.current.x += (targetPointer.current.x - pointer.current.x) * 0.035;
+      pointer.current.y += (targetPointer.current.y - pointer.current.y) * 0.035;
 
       ctx.clearRect(0, 0, width, height);
 
       for (const orb of orbs) {
         const fy = Math.sin(t * orb.floatSpeed + orb.phase) * orb.floatAmp;
-        const fx = Math.cos(t * orb.floatSpeed * 0.7 + orb.phase) * orb.floatAmp * 0.5;
-        const px = (pointer.current.x - 0.5) * 70 * orb.parallax;
-        const py = (pointer.current.y - 0.5) * 45 * orb.parallax;
+        const fx = Math.cos(t * orb.floatSpeed * 0.65 + orb.phase) * orb.floatAmp * 0.55;
+        const px = (pointer.current.x - 0.5) * 80 * orb.parallax;
+        const py = (pointer.current.y - 0.5) * 50 * orb.parallax;
         drawOrb(orb.x * width + fx + px, orb.y * height + fy + py, orb.r, t, orb);
       }
 
