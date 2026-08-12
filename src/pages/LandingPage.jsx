@@ -120,24 +120,24 @@ export default function LandingPage() {
             </span>
           </motion.div>
 
-          {/* Hero headline — dominant */}
+          {/* Hero headline — reduced, now secondary to the statement */}
           <motion.h1
             initial={{ opacity: 0, y: 24 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1.2, delay: 0.4, ease }}
             className="font-sans font-light tracking-[-0.04em] leading-[0.88] text-brand-text"
-            style={{ fontSize: 'clamp(3rem, 13vw, 11rem)' }}
+            style={{ fontSize: 'clamp(2.25rem, 9vw, 8rem)' }}
           >
             PREPWISE<span className="text-brand-primary">.</span>
           </motion.h1>
 
-          {/* Two-line sub-headline */}
+          {/* Two-line sub-headline — now the dominant hero statement */}
           <motion.p
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1.2, delay: 0.6, ease }}
             className="mt-6 md:mt-8 font-sans font-light tracking-[-0.02em] leading-[1.0] text-brand-text/85"
-            style={{ fontSize: 'clamp(1.5rem, 5.5vw, 3.75rem)' }}
+            style={{ fontSize: 'clamp(2.5rem, 10.5vw, 9rem)' }}
           >
             Where practice<br />
             becomes instinct.
@@ -208,22 +208,31 @@ export default function LandingPage() {
             The Loop
           </motion.span>
 
-          <div className="flex flex-wrap items-center justify-center gap-x-5 gap-y-3 md:gap-x-8">
-            {['Simulate', 'Analyze', 'Improve', 'Repeat'].map((label, i) => (
-              <React.Fragment key={label}>
-                <motion.span
-                  initial={{ opacity: 0, y: 12 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true, margin: '-40px' }}
-                  transition={{ duration: 0.7, delay: i * 0.12, ease }}
-                  className="text-xl md:text-2xl lg:text-3xl font-light tracking-tight text-brand-text/60"
-                >
-                  {label}
-                </motion.span>
-                {i < 3 && (
-                  <span className="text-brand-primary/25 text-sm md:text-base font-light">/</span>
-                )}
-              </React.Fragment>
+          <div className="flex flex-wrap items-start justify-center gap-x-8 gap-y-10 md:gap-x-14 lg:gap-x-20">
+            {[
+              { idx: '01', label: 'Simulate', desc: 'Practice realistic interviews.' },
+              { idx: '02', label: 'Analyze', desc: 'Understand your answers.' },
+              { idx: '03', label: 'Improve', desc: 'See where you need work.' },
+              { idx: '04', label: 'Repeat', desc: 'Practice with better preparation.' },
+            ].map((item, i) => (
+              <motion.div
+                key={item.label}
+                initial={{ opacity: 0, y: 12 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: '-40px' }}
+                transition={{ duration: 0.7, delay: i * 0.12, ease }}
+                className="flex flex-col items-center text-center"
+              >
+                <span className="text-[10px] md:text-[11px] font-light text-white/20 tracking-[0.3em] mb-3">
+                  {item.idx}
+                </span>
+                <span className="text-xl md:text-2xl lg:text-3xl font-light tracking-tight text-brand-text/60">
+                  {item.label}
+                </span>
+                <span className="mt-3 text-xs md:text-sm font-light text-white/20 leading-relaxed max-w-[14rem]">
+                  {item.desc}
+                </span>
+              </motion.div>
             ))}
           </div>
         </div>
@@ -233,46 +242,86 @@ export default function LandingPage() {
           3. ADAPTIVE INTERVIEW
           ==================================================================== */}
       <section className="relative px-6 md:px-10 lg:px-16 py-36 md:py-52 overflow-hidden">
-        <div className="relative max-w-5xl mx-auto">
-          <motion.span
-            {...reveal}
-            className="block text-[10px] font-light text-white/15 tracking-[0.3em] uppercase mb-8"
-          >
-            Practice / 02
-          </motion.span>
+        <div className="relative max-w-5xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-20 items-center">
+          {/* Left-side content — unchanged */}
+          <div>
+            <motion.span
+              {...reveal}
+              className="block text-[10px] font-light text-white/15 tracking-[0.3em] uppercase mb-8"
+            >
+              Practice / 02
+            </motion.span>
 
-          <motion.h2
-            {...reveal}
-            transition={{ duration: 1, ease }}
-            className="font-sans font-light tracking-[-0.02em] leading-[1.02] text-brand-text max-w-3xl"
-            style={{ fontSize: 'clamp(2rem, 6vw, 4.5rem)' }}
-          >
-            Practice conversations that respond to you.
-          </motion.h2>
+            <motion.h2
+              {...reveal}
+              transition={{ duration: 1, ease }}
+              className="font-sans font-light tracking-[-0.02em] leading-[1.02] text-brand-text max-w-3xl"
+              style={{ fontSize: 'clamp(2rem, 6vw, 4.5rem)' }}
+            >
+              Practice conversations that respond to you.
+            </motion.h2>
 
-          <motion.p
-            {...reveal}
-            transition={{ duration: 1, delay: 0.1, ease }}
-            className="mt-10 text-base md:text-lg font-light text-white/30 leading-relaxed max-w-xl"
-          >
-            Choose a role. Start a session. Questions adapt to your answers in real time, delivered through a timed simulation with voice input and an active interviewer presence.
-          </motion.p>
+            <motion.p
+              {...reveal}
+              transition={{ duration: 1, delay: 0.1, ease }}
+              className="mt-10 text-base md:text-lg font-light text-white/30 leading-relaxed max-w-xl"
+            >
+              Choose a role. Start a session. Questions adapt to your answers in real time, delivered through a timed simulation with voice input and an active interviewer presence.
+            </motion.p>
 
+            <motion.div
+              {...reveal}
+              transition={{ duration: 1, delay: 0.2, ease }}
+              className="mt-12 flex flex-col gap-3 max-w-md"
+            >
+              {[
+                'Role-based interview practice',
+                'Voice input and live transcription',
+                'Timed, adaptive question flow',
+              ].map((item) => (
+                <div key={item} className="flex items-center gap-3">
+                  <span className="w-1 h-1 rounded-full bg-brand-primary/60" />
+                  <span className="text-sm font-light text-brand-text/60">{item}</span>
+                </div>
+              ))}
+            </motion.div>
+          </div>
+
+          {/* Right-side voice waveform — subtle AI listening visual */}
           <motion.div
-            {...reveal}
-            transition={{ duration: 1, delay: 0.2, ease }}
-            className="mt-12 flex flex-col gap-3 max-w-md"
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true, margin: '-60px' }}
+            transition={{ duration: 1.4, ease }}
+            className="hidden lg:flex items-center justify-center"
           >
-            {[
-              'Role-based interview practice',
-              'Voice input and live transcription',
-              'Timed, adaptive question flow',
-            ].map((item) => (
-              <div key={item} className="flex items-center gap-3">
-                <span className="w-1 h-1 rounded-full bg-brand-primary/60" />
-                <span className="text-sm font-light text-brand-text/60">{item}</span>
-              </div>
-            ))}
+            <div className="flex items-end justify-center gap-[3px] h-24">
+              {Array.from({ length: 28 }).map((_, i) => (
+                <motion.span
+                  key={i}
+                  className="w-[2px] rounded-full"
+                  style={{
+                    background:
+                      i % 4 === 0
+                        ? 'rgba(124,92,255,0.45)'
+                        : 'rgba(255,255,255,0.10)',
+                  }}
+                  animate={{
+                    height: [
+                      `${8 + (i % 5) * 4}px`,
+                      `${28 + ((i * 7) % 50)}px`,
+                      `${8 + (i % 5) * 4}px`,
+                    ],
+                  }}
+                  transition={{
+                    duration: 1.2 + (i % 6) * 0.15,
+                    repeat: Infinity,
+                    ease: 'easeInOut',
+                    delay: i * 0.04,
+                  }}
+                />
+              ))}
+            </div>
           </motion.div>
         </div>
       </section>
