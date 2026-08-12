@@ -4,11 +4,11 @@ import { ArrowRight } from 'lucide-react';
 
 export default function LandingNav() {
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 h-16 bg-black/60 backdrop-blur-md">
+    <header className="fixed top-0 left-0 right-0 z-50 h-16 bg-black/90 backdrop-blur-sm">
       <div className="max-w-[1600px] mx-auto px-6 md:px-10 lg:px-16 h-full flex items-center justify-between">
         <Link
           to="/"
-          className="font-sans text-sm font-light tracking-[0.15em] text-brand-text/80 hover:text-brand-text transition-colors"
+          className="font-sans text-sm font-light tracking-[0.15em] text-brand-text/90 hover:text-brand-text transition-colors"
         >
           PREPWISE<span className="text-brand-primary">.</span>
         </Link>
@@ -19,7 +19,7 @@ export default function LandingNav() {
           Start Interview
           <ArrowRight
             size={14}
-            className="text-brand-primary/60 transition-all duration-500 group-hover:translate-x-1 group-hover:text-brand-primary"
+            className="text-brand-primary/70 transition-all duration-500 group-hover:translate-x-1 group-hover:text-brand-primary"
           />
         </Link>
       </div>
