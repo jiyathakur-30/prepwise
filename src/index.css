@@ -1,3 +1,5 @@
+@import "tailwindcss";
+
 :root {
   --brand-bg: #0a0a0f;
   --brand-surface: #12121a;
