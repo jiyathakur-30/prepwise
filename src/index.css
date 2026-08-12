@@ -1,29 +1,31 @@
-:root {
-  --brand-bg: #0a0a0f;
-  --brand-surface: #12121a;
-  --brand-border: rgba(255, 255, 255, 0.08);
-  --brand-text: #f5f5fa;
-  --brand-muted: #8888a0;
-  --brand-primary: #7C5CFF;
-  --brand-secondary: #5C7CFF;
+@import "tailwindcss";
+
+@theme {
+  --color-brand-bg: #0a0a0f;
+  --color-brand-surface: #12121a;
+  --color-brand-border: rgba(255, 255, 255, 0.08);
+  --color-brand-text: #f5f5fa;
+  --color-brand-muted: #8888a0;
+  --color-brand-primary: #7C5CFF;
+  --color-brand-secondary: #5C7CFF;
 }
 
 .theme-graphite {
-  --brand-bg: #16161c;
-  --brand-surface: #1c1c26;
-  --brand-border: rgba(255, 255, 255, 0.1);
-  --brand-text: #f0f0f5;
-  --brand-muted: #9999b0;
+  --color-brand-bg: #16161c;
+  --color-brand-surface: #1c1c26;
+  --color-brand-border: rgba(255, 255, 255, 0.1);
+  --color-brand-text: #f0f0f5;
+  --color-brand-muted: #9999b0;
 }
 
 .theme-light {
-  --brand-bg: #f8f8fc;
-  --brand-surface: #ffffff;
-  --brand-border: rgba(0, 0, 0, 0.1);
-  --brand-text: #1a1a2e;
-  --brand-muted: #666680;
-  --brand-primary: #6B4FE6;
-  --brand-secondary: #4F6BE6;
+  --color-brand-bg: #f8f8fc;
+  --color-brand-surface: #ffffff;
+  --color-brand-border: rgba(0, 0, 0, 0.1);
+  --color-brand-text: #1a1a2e;
+  --color-brand-muted: #666680;
+  --color-brand-primary: #6B4FE6;
+  --color-brand-secondary: #4F6BE6;
 }
 
 * {
@@ -33,8 +35,8 @@
 }
 
 body {
-  background: var(--brand-bg);
-  color: var(--brand-text);
+  background: var(--color-brand-bg);
+  color: var(--color-brand-text);
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
