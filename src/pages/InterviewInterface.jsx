@@ -9,6 +9,7 @@ import { mockQuestions } from '../data/mockQuestions';
 import { roles } from '../data/roles';
 import { personalities } from '../data/personalities';
 import { evaluateAnswer, calculateSessionStats } from '../utils/evaluation';
+import { generateInterviewQuestion } from '../services/questionGenerator';
 import QuestionCard from '../components/QuestionCard';
 import AnimatedButton from '../components/AnimatedButton';
 import DashboardCard from '../components/DashboardCard';
@@ -77,7 +78,7 @@ export default function InterviewInterface() {
 
   const textareaRef = useRef(null);
 
-  // 1. Cinematic Hologram startup on mount & compile questions
+  // 1. Cinematic Hologram startup on mount & compile questions with AI dynamic generation
   useEffect(() => {
     // Play sci-fi start sweep sound
     playHologramStart();
@@ -92,8 +93,39 @@ export default function InterviewInterface() {
     else if (config.difficulty === 'hard') primaryPool = [...hardQ];
     else primaryPool = [...medQ];
 
-    const finalPool = [...primaryPool, ...medQ, ...easyQ, ...hardQ].slice(0, 5);
-    setQuestionsList(finalPool);
+    const initialPool = [...primaryPool, ...medQ, ...easyQ, ...hardQ].slice(0, 5);
+    setQuestionsList(initialPool);
+
+    // Resolve target job from config or user profile
+    const userProfile = JSON.parse(localStorage.getItem('prepwise_user') || '{}');
+    const targetJob = config.targetJob || userProfile.targetJob || selectedRole.title;
+
+    // Asynchronously request dynamic AI-generated first question
+    generateInterviewQuestion({
+      targetJob,
+      roleId: config.roleId,
+      difficulty: config.difficulty,
+      interviewType: config.interviewType,
+      personalityId: config.personalityId,
+      questionIndex: 0,
+      previousQuestions: [],
+      previousEvaluations: []
+    }).then(aiQuestion => {
+      if (aiQuestion && aiQuestion.question) {
+        setQuestionsList(prev => {
+          if (prev.length === 0) return [aiQuestion];
+          const updated = [...prev];
+          updated[0] = aiQuestion;
+          return updated;
+        });
+
+        if (aiQuestion.isAIGenerated) {
+          setAiStatus(`${coach.name}: "AI question formulated for your ${targetJob} calibration track."`);
+        }
+      }
+    }).catch(err => {
+      console.warn('[InterviewInterface] AI generation fallback active:', err);
+    });
 
     // Dynamic historical memory check
     const history = JSON.parse(localStorage.getItem('prepwise_history') || '[]');
@@ -103,7 +135,7 @@ export default function InterviewInterface() {
         setMemoryInsight(`Observing continuous progression: detected past loops on this specialization track.`);
       }
     }
-  }, [config.roleId, config.difficulty]);
+  }, [config.roleId, config.difficulty, config.targetJob, config.interviewType, config.personalityId, selectedRole.title, coach.name]);
 
   // 2. Chronometer Timer
   useEffect(() => {

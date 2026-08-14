@@ -35,12 +35,16 @@ export default function RoleSelectionPage() {
   };
 
   const handleStartSession = () => {
+    const userProfile = JSON.parse(localStorage.getItem('prepwise_user') || '{}');
+    const targetJob = userProfile.targetJob || currentRole?.title || 'Software Engineer';
+
     navigate('/interview', {
       state: {
         roleId: selectedRoleId,
         difficulty,
         interviewType,
-        personalityId: selectedPersonalityId
+        personalityId: selectedPersonalityId,
+        targetJob
       }
     });
   };

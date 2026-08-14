@@ -1,15 +1,25 @@
 import React, { useState } from 'react';
-import { motion } from 'framer-motion';
-import { Sparkles, Mail, User, Briefcase, ArrowRight, ShieldCheck, Cpu } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { Sparkles, Mail, User, Briefcase, ArrowRight, ShieldCheck, Cpu, ChevronDown } from 'lucide-react';
 import AnimatedButton from '../components/AnimatedButton';
 import DashboardCard from '../components/DashboardCard';
 
 export default function AuthSplash({ onLoginSuccess }) {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
-  const [targetJob, setTargetJob] = useState('Senior Frontend Engineer');
+  const [selectedTrack, setSelectedTrack] = useState('Senior Frontend Engineer');
+  const [customCareer, setCustomCareer] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [errorMsg, setErrorMsg] = useState('');
+
+  const handleTrackChange = (e) => {
+    const value = e.target.value;
+    setSelectedTrack(value);
+    if (value !== 'Other') {
+      setCustomCareer('');
+    }
+    if (errorMsg) setErrorMsg('');
+  };
 
   const handleRegister = (e) => {
     e.preventDefault();
@@ -22,6 +32,13 @@ export default function AuthSplash({ onLoginSuccess }) {
       return;
     }
 
+    const finalTargetJob = selectedTrack === 'Other' ? customCareer.trim() : selectedTrack.trim();
+
+    if (selectedTrack === 'Other' && !finalTargetJob) {
+      setErrorMsg('Please enter your target career.');
+      return;
+    }
+
     setIsLoading(true);
     setErrorMsg('');
 
@@ -30,7 +47,7 @@ export default function AuthSplash({ onLoginSuccess }) {
       const userData = {
         name: name.trim(),
         email: email.trim().toLowerCase(),
-        targetJob: targetJob.trim(),
+        targetJob: finalTargetJob,
         joinedDate: new Date().toLocaleDateString(undefined, { month: 'short', year: 'numeric' })
       };
       
@@ -136,20 +153,53 @@ export default function AuthSplash({ onLoginSuccess }) {
               <div className="flex flex-col gap-2">
                 <label className="text-[10px] font-bold uppercase tracking-wider text-brand-muted">Target Career Track</label>
                 <div className="relative">
-                  <Briefcase className="absolute left-3.5 top-1/2 -translate-y-1/2 text-brand-muted/40" size={14} />
+                  <Briefcase className="absolute left-3.5 top-1/2 -translate-y-1/2 text-brand-muted/40 pointer-events-none" size={14} />
                   <select
                     disabled={isLoading}
-                    value={targetJob}
-                    onChange={(e) => setTargetJob(e.target.value)}
-                    className="w-full pl-10 pr-4 py-3 text-xs bg-brand-bg border border-white/[0.06] rounded-xl text-brand-text placeholder-brand-muted/30 focus:outline-none focus:border-brand-primary focus:ring-1 focus:ring-brand-primary transition-all appearance-none cursor-pointer"
+                    value={selectedTrack}
+                    onChange={handleTrackChange}
+                    className="w-full pl-10 pr-10 py-3 text-xs bg-brand-bg border border-white/[0.06] rounded-xl text-brand-text placeholder-brand-muted/30 focus:outline-none focus:border-brand-primary focus:ring-1 focus:ring-brand-primary transition-all appearance-none cursor-pointer"
                   >
                     <option value="Senior Frontend Engineer">Senior Frontend Engineer</option>
                     <option value="Senior Python Developer">Senior Python Developer</option>
                     <option value="Backend Systems Architect">Backend Systems Architect</option>
                     <option value="Algorithmic DSA Candidate">Algorithmic DSA Candidate</option>
                     <option value="Full-Stack Engineer">Full-Stack Engineer</option>
+                    <option value="Other">Other</option>
                   </select>
+                  <ChevronDown className="absolute right-3.5 top-1/2 -translate-y-1/2 text-brand-muted/50 pointer-events-none" size={14} />
                 </div>
+
+                {/* Dynamic Custom Career Input when 'Other' is selected */}
+                <AnimatePresence>
+                  {selectedTrack === 'Other' && (
+                    <motion.div
+                      initial={{ opacity: 0, height: 0, y: -4 }}
+                      animate={{ opacity: 1, height: 'auto', y: 0 }}
+                      exit={{ opacity: 0, height: 0, y: -4 }}
+                      transition={{ duration: 0.2 }}
+                      className="flex flex-col gap-1.5 pt-1 overflow-hidden"
+                    >
+                      <div className="relative">
+                        <Sparkles className="absolute left-3.5 top-1/2 -translate-y-1/2 text-brand-primary/60 pointer-events-none" size={14} />
+                        <input
+                          type="text"
+                          disabled={isLoading}
+                          value={customCareer}
+                          onChange={(e) => {
+                            setCustomCareer(e.target.value);
+                            if (errorMsg) setErrorMsg('');
+                          }}
+                          placeholder="Enter your target career"
+                          className="w-full pl-10 pr-4 py-3 text-xs bg-white/[0.01] border border-white/[0.06] rounded-xl text-brand-text placeholder-brand-muted/30 focus:outline-none focus:border-brand-primary focus:ring-1 focus:ring-brand-primary transition-all"
+                        />
+                      </div>
+                      <span className="text-[10px] text-brand-muted/70 pl-1">
+                        e.g. AI Engineer, Data Scientist, Cloud Engineer, DevOps Engineer
+                      </span>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
               </div>
 
               {/* Submit Action */}

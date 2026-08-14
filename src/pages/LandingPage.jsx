@@ -87,93 +87,86 @@ export default function LandingPage() {
           ==================================================================== */}
       <section
         ref={heroRef}
-        className="relative min-h-[100svh] flex items-center justify-center overflow-hidden -mt-16"
+        className="relative min-h-[100svh] flex flex-col items-center justify-center overflow-hidden pt-16 pb-12"
         style={{ '--px': '0px', '--py': '0px' }}
       >
         {/* Dimensional orb field */}
-        <OrbField className="absolute inset-0 w-full h-full" />
+        <OrbField className="absolute inset-0 w-full h-full z-0 pointer-events-auto" />
 
         {/* Vignette for depth — darkens edges, keeps center readable */}
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(0,0,0,0.25)_25%,rgba(0,0,0,0.75)_100%)] pointer-events-none" />
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(0,0,0,0.25)_25%,rgba(0,0,0,0.75)_100%)] pointer-events-none z-[1]" />
 
-        {/* Centered content */}
+        {/* Hero content container: Left-center balanced composition (~18–22% from left on desktop) */}
         <div
-          className="relative z-10 text-center px-6 max-w-5xl mx-auto w-full"
+          className="relative z-10 w-full max-w-5xl mx-auto px-6 sm:px-10 lg:pl-16 lg:pr-8 my-auto pointer-events-none"
           style={{
             transform: 'translate(calc(var(--px) * -1), calc(var(--py) * -1))',
             transition: 'transform 0.6s cubic-bezier(0.16,1,0.3,1)',
           }}
         >
-          {/* Subtle system labels */}
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 1.2, delay: 0.3 }}
-            className="flex items-center justify-center gap-3 sm:gap-5 mb-14 md:mb-20"
-          >
-            <span className="text-[9px] md:text-[10px] font-light text-white/20 tracking-[0.3em] uppercase">
-              Interview Intelligence / 01
-            </span>
-            <span className="hidden sm:inline-block w-6 h-px bg-white/8" />
-            <span className="text-[9px] md:text-[10px] font-light text-white/15 tracking-[0.3em] uppercase">
-              Adaptive Practice System
-            </span>
-          </motion.div>
-
-          {/* Hero headline — reduced, now secondary to the statement */}
-          <motion.h1
-            initial={{ opacity: 0, y: 24 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1.2, delay: 0.4, ease }}
-            className="font-sans font-light tracking-[-0.04em] leading-[0.88] text-brand-text"
-            style={{ fontSize: 'clamp(2.25rem, 9vw, 8rem)' }}
-          >
-            PREPWISE<span className="text-brand-primary">.</span>
-          </motion.h1>
-
-          {/* Two-line sub-headline — now the dominant hero statement */}
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1.2, delay: 0.6, ease }}
-            className="mt-6 md:mt-8 font-sans font-light tracking-[-0.02em] leading-[1.0] text-brand-text/85"
-            style={{ fontSize: 'clamp(2.5rem, 10.5vw, 9rem)' }}
-          >
-            Where practice<br />
-            becomes instinct.
-          </motion.p>
-
-          {/* Supporting copy — small and muted */}
-          <motion.p
-            initial={{ opacity: 0, y: 16 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1.2, delay: 0.8, ease }}
-            className="mt-10 md:mt-14 text-sm md:text-base font-light text-white/25 max-w-md mx-auto leading-relaxed"
-          >
-            AI-powered interview simulations that understand how you answer, adapt to how you think, and show you exactly where to improve.
-          </motion.p>
-
-          {/* Primary CTA */}
-          <motion.div
-            initial={{ opacity: 0, y: 16 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1.2, delay: 1.0, ease }}
-            className="mt-12 md:mt-16"
-          >
-            <Link
-              to="/select"
-              className="group inline-flex items-center gap-3 text-base md:text-lg font-light text-brand-text tracking-tight"
+          <div className="max-w-[540px] flex flex-col items-center sm:items-start text-center sm:text-left">
+            {/* 1. Metadata: INTERVIEW INTELLIGENCE / 01 — ADAPTIVE PRACTICE SYSTEM */}
+            <motion.div
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 1.0, delay: 0.25, ease }}
+              className="flex items-center justify-center sm:justify-start gap-2.5 sm:gap-3 mb-5 md:mb-6 pointer-events-auto select-none"
             >
-              <span className="relative">
-                Start an Interview
-                <span className="absolute -bottom-1 left-0 w-0 h-px bg-brand-primary transition-all duration-500 group-hover:w-full" />
+              <span className="text-[10px] sm:text-[11px] font-medium tracking-[0.20em] uppercase text-zinc-400">
+                INTERVIEW INTELLIGENCE / 01
               </span>
-              <ArrowRight
-                size={18}
-                className="text-brand-primary transition-transform duration-500 group-hover:translate-x-2"
-              />
-            </Link>
-          </motion.div>
+              <span className="w-4 h-px bg-white/20" />
+              <span className="text-[10px] sm:text-[11px] font-medium tracking-[0.20em] uppercase text-zinc-400">
+                ADAPTIVE PRACTICE SYSTEM
+              </span>
+            </motion.div>
+
+            {/* 2. Main Headline: Exactly 2 lines on desktop, ~60-68px, light/300 font */}
+            <motion.h1
+              initial={{ opacity: 0, y: 18 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 1.1, delay: 0.35, ease }}
+              className="font-sans font-light tracking-[-0.035em] text-white pointer-events-auto select-none"
+              style={{
+                fontSize: 'clamp(2.25rem, 4.2vw, 4rem)',
+                lineHeight: 1.08,
+              }}
+            >
+              Where practice<br className="hidden sm:inline" /> becomes instinct.
+            </motion.h1>
+
+            {/* 3. Supporting Text: Left-aligned, max-w ~520px, #A1A1AA, line-height 1.6 */}
+            <motion.p
+              initial={{ opacity: 0, y: 14 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 1.1, delay: 0.5, ease }}
+              className="mt-5 md:mt-6 text-[15px] sm:text-[16px] font-light text-[#A1A1AA] max-w-[520px] leading-[1.6] pointer-events-auto"
+            >
+              AI-powered interview simulations that understand how you answer, adapt to how you think, and show you exactly where to improve.
+            </motion.p>
+
+            {/* 4. Editorial Text CTA: Clean text link with purple arrow */}
+            <motion.div
+              initial={{ opacity: 0, y: 12 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 1.1, delay: 0.65, ease }}
+              className="mt-7 md:mt-9 pointer-events-auto"
+            >
+              <Link
+                to="/select"
+                className="group inline-flex items-center gap-2.5 text-[16px] sm:text-[17px] font-normal text-white tracking-tight cursor-pointer select-none"
+              >
+                <span className="relative">
+                  Start an Interview
+                  <span className="absolute -bottom-1 left-0 w-0 h-px bg-brand-primary transition-all duration-300 group-hover:w-full" />
+                </span>
+                <ArrowRight
+                  size={18}
+                  className="text-brand-primary transition-transform duration-300 group-hover:translate-x-1.5"
+                />
+              </Link>
+            </motion.div>
+          </div>
         </div>
 
         {/* Bottom system status */}
@@ -181,15 +174,15 @@ export default function LandingPage() {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 1.2, delay: 1.3 }}
-          className="absolute bottom-8 left-6 md:left-10 lg:left-16 right-6 md:right-10 lg:right-16 flex items-center justify-between z-10"
+          className="absolute bottom-6 md:bottom-8 left-6 md:left-10 lg:left-16 right-6 md:right-10 lg:right-16 flex items-center justify-between z-10 pointer-events-none"
         >
-          <span className="text-[9px] md:text-[10px] font-light text-white/15 tracking-[0.3em] uppercase">
+          <span className="text-[10px] md:text-[11px] font-medium text-zinc-400 tracking-[0.25em] uppercase">
             Session Status: Ready
           </span>
           <motion.span
-            animate={{ opacity: [0.25, 0.7, 0.25] }}
+            animate={{ opacity: [0.35, 1, 0.35] }}
             transition={{ duration: 2.6, repeat: Infinity, ease: 'easeInOut' }}
-            className="text-[9px] md:text-[10px] font-light text-brand-primary/40 tracking-[0.3em] uppercase"
+            className="text-[10px] md:text-[11px] font-medium text-brand-primary tracking-[0.25em] uppercase"
           >
             ● Online
           </motion.span>
@@ -199,16 +192,16 @@ export default function LandingPage() {
       {/* ====================================================================
           2. PRODUCT LOOP — minimal editorial transition
           ==================================================================== */}
-      <section className="relative px-6 py-36 md:py-52">
-        <div className="max-w-3xl mx-auto text-center">
+      <section className="relative px-6 py-20 md:py-28">
+        <div className="max-w-4xl mx-auto text-center">
           <motion.span
             {...reveal}
-            className="block text-[10px] font-light text-white/15 tracking-[0.3em] uppercase mb-14 md:mb-20"
+            className="block text-[10px] md:text-[11px] font-medium text-zinc-400 tracking-[0.25em] uppercase mb-8 md:mb-12"
           >
             The Loop
           </motion.span>
 
-          <div className="flex flex-wrap items-start justify-center gap-x-8 gap-y-10 md:gap-x-14 lg:gap-x-20">
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-x-6 gap-y-8 md:gap-x-8 lg:gap-x-10 max-w-4xl mx-auto">
             {[
               { idx: '01', label: 'Simulate', desc: 'Practice realistic interviews.' },
               { idx: '02', label: 'Analyze', desc: 'Understand your answers.' },
@@ -221,15 +214,15 @@ export default function LandingPage() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: '-40px' }}
                 transition={{ duration: 0.7, delay: i * 0.12, ease }}
-                className="flex flex-col items-center text-center"
+                className="flex flex-col items-center text-center px-2"
               >
-                <span className="text-[10px] md:text-[11px] font-light text-white/20 tracking-[0.3em] mb-3">
+                <span className="text-[10px] md:text-[11px] font-medium text-brand-primary/90 tracking-[0.25em] mb-2 md:mb-3">
                   {item.idx}
                 </span>
-                <span className="text-xl md:text-2xl lg:text-3xl font-light tracking-tight text-brand-text/60">
+                <span className="text-xl md:text-2xl font-light tracking-tight text-brand-text">
                   {item.label}
                 </span>
-                <span className="mt-3 text-xs md:text-sm font-light text-white/20 leading-relaxed max-w-[14rem]">
+                <span className="mt-2 md:mt-3 text-xs md:text-sm font-light text-zinc-400 leading-relaxed max-w-[13rem]">
                   {item.desc}
                 </span>
               </motion.div>
@@ -241,13 +234,13 @@ export default function LandingPage() {
       {/* ====================================================================
           3. ADAPTIVE INTERVIEW
           ==================================================================== */}
-      <section className="relative px-6 md:px-10 lg:px-16 py-36 md:py-52 overflow-hidden">
-        <div className="relative max-w-5xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-20 items-center">
-          {/* Left-side content — unchanged */}
+      <section className="relative px-6 md:px-10 lg:px-16 py-20 md:py-28 overflow-hidden">
+        <div className="relative max-w-5xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+          {/* Left-side content */}
           <div>
             <motion.span
               {...reveal}
-              className="block text-[10px] font-light text-white/15 tracking-[0.3em] uppercase mb-8"
+              className="block text-[10px] md:text-[11px] font-medium text-zinc-400 tracking-[0.25em] uppercase mb-4 md:mb-6"
             >
               Practice / 02
             </motion.span>
@@ -255,8 +248,8 @@ export default function LandingPage() {
             <motion.h2
               {...reveal}
               transition={{ duration: 1, ease }}
-              className="font-sans font-light tracking-[-0.02em] leading-[1.02] text-brand-text max-w-3xl"
-              style={{ fontSize: 'clamp(2rem, 6vw, 4.5rem)' }}
+              className="font-sans font-light tracking-[-0.02em] leading-[1.05] text-brand-text max-w-3xl"
+              style={{ fontSize: 'clamp(2rem, 5vw, 3.75rem)' }}
             >
               Practice conversations that respond to you.
             </motion.h2>
@@ -264,7 +257,7 @@ export default function LandingPage() {
             <motion.p
               {...reveal}
               transition={{ duration: 1, delay: 0.1, ease }}
-              className="mt-10 text-base md:text-lg font-light text-white/30 leading-relaxed max-w-xl"
+              className="mt-6 md:mt-8 text-base md:text-lg font-light text-zinc-400 leading-relaxed max-w-xl"
             >
               Choose a role. Start a session. Questions adapt to your answers in real time, delivered through a timed simulation with voice input and an active interviewer presence.
             </motion.p>
@@ -272,7 +265,7 @@ export default function LandingPage() {
             <motion.div
               {...reveal}
               transition={{ duration: 1, delay: 0.2, ease }}
-              className="mt-12 flex flex-col gap-3 max-w-md"
+              className="mt-8 md:mt-10 flex flex-col gap-3 max-w-md"
             >
               {[
                 'Role-based interview practice',
@@ -280,8 +273,8 @@ export default function LandingPage() {
                 'Timed, adaptive question flow',
               ].map((item) => (
                 <div key={item} className="flex items-center gap-3">
-                  <span className="w-1 h-1 rounded-full bg-brand-primary/60" />
-                  <span className="text-sm font-light text-brand-text/60">{item}</span>
+                  <span className="w-1.5 h-1.5 rounded-full bg-brand-primary" />
+                  <span className="text-sm font-light text-zinc-300">{item}</span>
                 </div>
               ))}
             </motion.div>
@@ -304,7 +297,7 @@ export default function LandingPage() {
                     background:
                       i % 4 === 0
                         ? 'rgba(124,92,255,0.45)'
-                        : 'rgba(255,255,255,0.10)',
+                        : 'rgba(255,255,255,0.15)',
                   }}
                   animate={{
                     height: [
@@ -329,8 +322,8 @@ export default function LandingPage() {
       {/* ====================================================================
           4. FEEDBACK / INTELLIGENCE
           ==================================================================== */}
-      <section className="relative px-6 md:px-10 lg:px-16 py-36 md:py-52 overflow-hidden">
-        <div className="relative max-w-5xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-16 lg:gap-20 items-center">
+      <section className="relative px-6 md:px-10 lg:px-16 py-20 md:py-28 overflow-hidden">
+        <div className="relative max-w-5xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
           {/* Score ring — minimal */}
           <motion.div
             initial={{ opacity: 0, scale: 0.94 }}
@@ -339,9 +332,9 @@ export default function LandingPage() {
             transition={{ duration: 1.2, ease }}
             className="lg:col-span-5 order-2 lg:order-1"
           >
-            <div className="relative w-full max-w-[240px] mx-auto aspect-square">
+            <div className="relative w-full max-w-[220px] mx-auto aspect-square">
               <svg viewBox="0 0 200 200" className="w-full h-full -rotate-90">
-                <circle cx="100" cy="100" r="90" fill="none" stroke="rgba(255,255,255,0.04)" strokeWidth="1" />
+                <circle cx="100" cy="100" r="90" fill="none" stroke="rgba(255,255,255,0.06)" strokeWidth="1" />
                 <motion.circle
                   cx="100"
                   cy="100"
@@ -364,7 +357,7 @@ export default function LandingPage() {
                 </defs>
               </svg>
               <div className="absolute inset-0 flex flex-col items-center justify-center">
-                <span className="text-[9px] font-light text-white/20 tracking-[0.3em] uppercase mb-2">
+                <span className="text-[9px] font-medium text-zinc-400 tracking-[0.25em] uppercase mb-1">
                   Session Score
                 </span>
                 <motion.span
@@ -384,7 +377,7 @@ export default function LandingPage() {
           <div className="lg:col-span-7 order-1 lg:order-2">
             <motion.span
               {...reveal}
-              className="block text-[10px] font-light text-white/15 tracking-[0.3em] uppercase mb-8"
+              className="block text-[10px] md:text-[11px] font-medium text-zinc-400 tracking-[0.25em] uppercase mb-4 md:mb-6"
             >
               Feedback / 03
             </motion.span>
@@ -392,8 +385,8 @@ export default function LandingPage() {
             <motion.h2
               {...reveal}
               transition={{ duration: 1, ease }}
-              className="font-sans font-light tracking-[-0.02em] leading-[1.02] text-brand-text"
-              style={{ fontSize: 'clamp(2rem, 6vw, 4.5rem)' }}
+              className="font-sans font-light tracking-[-0.02em] leading-[1.05] text-brand-text"
+              style={{ fontSize: 'clamp(2rem, 5vw, 3.75rem)' }}
             >
               Know what changed between one answer and the next.
             </motion.h2>
@@ -401,7 +394,7 @@ export default function LandingPage() {
             <motion.p
               {...reveal}
               transition={{ duration: 1, delay: 0.1, ease }}
-              className="mt-10 text-base md:text-lg font-light text-white/30 leading-relaxed max-w-xl"
+              className="mt-6 md:mt-8 text-base md:text-lg font-light text-zinc-400 leading-relaxed max-w-xl"
             >
               After every session, a dashboard breaks down your performance: overall score, strengths, improvement areas, and specific restructuring guidance mapped to ideal answers.
             </motion.p>
@@ -409,13 +402,13 @@ export default function LandingPage() {
             <motion.div
               {...reveal}
               transition={{ duration: 1, delay: 0.2, ease }}
-              className="mt-12 grid grid-cols-2 gap-x-8 gap-y-4 max-w-md"
+              className="mt-8 md:mt-10 grid grid-cols-2 gap-x-8 gap-y-3.5 max-w-md"
             >
               {['Overall score', 'Strengths', 'Improvement areas', 'Actionable feedback'].map(
                 (item) => (
                   <div key={item} className="flex items-center gap-3">
-                    <span className="w-1 h-1 rounded-full bg-brand-primary/60" />
-                    <span className="text-sm font-light text-brand-text/60">{item}</span>
+                    <span className="w-1.5 h-1.5 rounded-full bg-brand-primary" />
+                    <span className="text-sm font-light text-zinc-300">{item}</span>
                   </div>
                 )
               )}
@@ -427,11 +420,11 @@ export default function LandingPage() {
       {/* ====================================================================
           5. CAPABILITIES
           ==================================================================== */}
-      <section className="relative px-6 md:px-10 lg:px-16 py-36 md:py-52">
+      <section className="relative px-6 md:px-10 lg:px-16 py-20 md:py-28">
         <div className="max-w-5xl mx-auto">
           <motion.span
             {...reveal}
-            className="block text-[10px] font-light text-white/15 tracking-[0.3em] uppercase mb-8"
+            className="block text-[10px] md:text-[11px] font-medium text-zinc-400 tracking-[0.25em] uppercase mb-4 md:mb-6"
           >
             Capabilities / 04
           </motion.span>
@@ -439,13 +432,13 @@ export default function LandingPage() {
           <motion.h2
             {...reveal}
             transition={{ duration: 1, ease }}
-            className="font-sans font-light tracking-[-0.02em] leading-[1.02] text-brand-text max-w-3xl mb-20 md:mb-28"
-            style={{ fontSize: 'clamp(2rem, 6vw, 4.5rem)' }}
+            className="font-sans font-light tracking-[-0.02em] leading-[1.05] text-brand-text max-w-3xl mb-12 md:mb-16"
+            style={{ fontSize: 'clamp(2rem, 5vw, 3.75rem)' }}
           >
             Everything the simulation measures.
           </motion.h2>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-x-12 lg:gap-x-24 gap-y-14">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-x-12 lg:gap-x-20 gap-y-10 md:gap-y-12">
             {capabilities.map((cap, i) => (
               <FeatureCard
                 key={cap.title}
@@ -461,13 +454,13 @@ export default function LandingPage() {
       {/* ====================================================================
           6. FINAL CONVERSION
           ==================================================================== */}
-      <section className="relative px-6 py-48 md:py-64 overflow-hidden">
+      <section className="relative px-6 py-24 md:py-32 overflow-hidden">
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(124,92,255,0.05),transparent_60%)] pointer-events-none" />
 
         <div className="relative max-w-4xl mx-auto text-center">
           <motion.span
             {...reveal}
-            className="block text-[10px] font-light text-white/15 tracking-[0.3em] uppercase mb-10"
+            className="block text-[10px] md:text-[11px] font-medium text-zinc-400 tracking-[0.25em] uppercase mb-6 md:mb-8"
           >
             Begin
           </motion.span>
@@ -475,8 +468,8 @@ export default function LandingPage() {
           <motion.h2
             {...reveal}
             transition={{ duration: 1.1, ease }}
-            className="font-sans font-light tracking-[-0.02em] leading-[1.0] text-brand-text"
-            style={{ fontSize: 'clamp(2.25rem, 7vw, 5.5rem)' }}
+            className="font-sans font-light tracking-[-0.02em] leading-[1.05] text-brand-text"
+            style={{ fontSize: 'clamp(2.25rem, 6vw, 4.5rem)' }}
           >
             Your next interview
             <br />
@@ -486,7 +479,7 @@ export default function LandingPage() {
           <motion.p
             {...reveal}
             transition={{ duration: 1.1, delay: 0.1, ease }}
-            className="mt-10 text-base md:text-lg font-light text-white/25 max-w-lg mx-auto leading-relaxed"
+            className="mt-6 md:mt-8 text-base md:text-lg font-light text-zinc-400 max-w-lg mx-auto leading-relaxed"
           >
             One session is enough to see where you stand and what to refine. The first one is ready whenever you are.
           </motion.p>
@@ -494,7 +487,7 @@ export default function LandingPage() {
           <motion.div
             {...reveal}
             transition={{ duration: 1.1, delay: 0.2, ease }}
-            className="mt-14"
+            className="mt-10 md:mt-12"
           >
             <Link
               to="/select"
